@@ -1,0 +1,22 @@
+name: "example oidc"
+on:
+  push:
+    branches:
+      - "master"
+jobs:
+  run:
+    name: "example to list bucket contents"
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: "ubuntu-latest"
+    steps:
+      - id: "auth"
+        uses: "sethvargo/oidc-auth-google-cloud@main"
+        with:
+          workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
+          service_account: ${{ secrets.SA_EMAIL }}
+      - id: "list buckets contents"
+        run: |-
+          curl https://storage.googleapis.com/storage/v1/b/anna-terraform-states/o \
+            --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"
