@@ -1,11 +1,11 @@
-name: "example oidc"
+name: "Example Workload Identity"
 on:
   push:
     branches:
       - "master"
 jobs:
   run:
-    name: "example to list bucket contents"
+    name: "Example push to ANNA Money Docker registry via WorkloadIdentity auth"
     permissions:
       id-token: write
       contents: read
