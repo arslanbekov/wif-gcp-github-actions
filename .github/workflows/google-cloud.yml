@@ -14,10 +14,10 @@ jobs:
       - id: "auth"
         uses: "google-github-actions/auth@v0"
         with:
-          token_format: "access_token"
-          workload_identity_provider: ${{ secrets.PROVIDER_NAME }}
-          service_account: ${{ secrets.SA_EMAIL }}
-      - id: "list-buckets-contents"
-        run: |-
-          curl https://storage.googleapis.com/storage/v1/b/anna-terraform-states/o \
-            --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
+          service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
+      - name: Docker
+        run: |
+          docker pull nginx:1.21.6
+          docker tag nginx:1.21.6 eu.gcr.io/anna-money/custom-nginx-delete:1.21.6
+          docker push eu.gcr.io/anna-money/custom-nginx-delete:1.21.6
