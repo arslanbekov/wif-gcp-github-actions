@@ -18,9 +18,11 @@ jobs:
           token_format: "access_token"
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
           service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
+
       - name: "Docker login"
         run: |
           echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+
       - name: "Docker pull, tag and push"
         run: |
           docker pull nginx:1.21.6
