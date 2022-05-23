@@ -17,7 +17,7 @@ This repo show how you can configure and start use Workload Identity provider fr
     echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
 ```
 
-**secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME** and **secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL** — already exist at the organization level and you can start using them.
+`GCP_WORKLOAD_IDENTITY_PROVIDER_NAME` and `GCP_WORKLOAD_IDENTITY_SA_EMAIL` secrets already exist at the organization level and you can start using them.
 
 ## Links
 
