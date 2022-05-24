@@ -4,7 +4,8 @@ on:
     branches:
       - "master"
 env:
-  GKE_PROJECT: "1.21.6"
+  NGINX_VERSION: "1.21.6"
+
 jobs:
   run:
     name: "Example push to ANNA Money Docker registry via WorkloadIdentity auth"
@@ -20,23 +21,12 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
           service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
-
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
-#      - name: "Docker login"
-#        run: |
-#          echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+      - name: "Docker login"
+        run: |
+          echo '${{ steps.auth.outputs.access_token }}' | docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
 
       - name: "Docker nginx pull, tag and push"
         run: |
-          docker pull nginx:"$GKE_PROJECT"
-          docker tag nginx:"$GKE_PROJECT" eu.gcr.io/anna-money/anna-nginx:"$GKE_PROJECT"
-#          docker push eu.gcr.io/anna-money/anna-nginx:"$GKE_PROJECT"
-
-      - name: "gcloud builds"
-        run: |-
-          gcloud builds submit \
-            --quiet \
-            --tag "eu.gcr.io/anna-money/anna-nginx:"$GKE_PROJECT"
+          docker pull nginx:"$NGINX_VERSION"
+          docker tag nginx:"$NGINX_VERSION" eu.gcr.io/anna-money/anna-nginx:"$NGINX_VERSION"
+          docker push eu.gcr.io/anna-money/anna-nginx:"$NGINX_VERSION"
