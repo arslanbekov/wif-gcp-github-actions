@@ -1,6 +1,6 @@
 # Workload Identity GCP
 
-This repo show how you can configure and start use Workload Identity provider from ANNA Money GCP
+This repo show how you can configure and start use Workload Identity Provider GCP
 
 ```yaml
 name: "Workload name"
@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: "Auth in GCP"
         id: auth
-        uses: "google-github-actions/auth@v0"
+        uses: "google-github-actions/auth@v1"
         with:
           token_format: "access_token"
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
@@ -33,12 +33,3 @@ permissions:
   id-token: write
   contents: read
 ```
-
-Also `GCP_WORKLOAD_IDENTITY_PROVIDER_NAME` and `GCP_WORKLOAD_IDENTITY_SA_EMAIL` secrets already exist at the organization level and you can start using them.
-
-## Links
-
-1. [GCP GHA Keyless description](https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions)
-2. [GCP WIP documentation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation)
-3. [ANNA-Money terraform WIP](https://github.com/anna-money/anna-terraform/tree/master/gcp-workload-identity)
-4. [GHA auth in gcp action](https://github.com/google-github-actions/auth)
